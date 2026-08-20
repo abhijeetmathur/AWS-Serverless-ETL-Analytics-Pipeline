@@ -1,0 +1,32 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "ValidateAndTransform",
+  "States": {
+    "ValidateAndTransform": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Output": "{% $states.result.Payload %}",
+      "Arguments": {
+        "Payload": "{% $states.input %}",
+        "FunctionName": "arn:aws:lambda:eu-north-1:742875367353:function:payments-validator-transformer:$LATEST"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2,
+          "JitterStrategy": "FULL"
+        }
+      ],
+      "End": true,
+      "Comment": "Validate and transform payment transactions using Lambda."
+    }
+  },
+  "QueryLanguage": "JSONata"
+}
