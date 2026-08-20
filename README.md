@@ -29,6 +29,8 @@ flowchart LR
     C -.logs.-> I
 ```
 
+## AWS Services
+
 | Service | Role |
 |---|---|
 | **Amazon S3** | Landing zone for raw files, and storage for processed (Parquet) and rejected output |
@@ -39,7 +41,7 @@ flowchart LR
 | **AWS IAM** | Service-to-service permissions (no hard-coded credentials) |
 | **Amazon CloudWatch** | Logging and monitoring across every stage |
 
-### How It Works
+## How It Works
 
 1. **A CSV file lands in S3.** Transaction files are uploaded to the `raw/` prefix of the `payments-analytics-2026` bucket — this is the only entry point into the pipeline.
 2. **S3 emits an event, EventBridge catches it.** S3 automatically emits an "Object Created" event for every new file. EventBridge is subscribed to these events and applies a rule that only matches files under `raw/`, so nothing else in the bucket (including the pipeline's own output) can accidentally start a new run.
@@ -194,9 +196,9 @@ AWS_Serverless_ETL_Analytics_Pipeline/
 ├── step-functions/
 │   └── payments-analytics-pipeline.json
 └── redshift/
-    ├── 01_create_table.sql
-    ├── 03_load_data.sql
-    └── 04_analytics_queries.sql
+    ├── Create_table.sql
+    ├── Load_data.sql
+    └── Analytics_queries.sql
 ```
 ---
 
