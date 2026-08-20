@@ -161,7 +161,6 @@ The pipeline was validated end to end using real transaction CSV uploads:
 | Data processing | ✅ 557 valid records, 3 rejected records on a sample run |
 | Multi-file processing | ✅ Independent executions for concurrent file uploads |
 
-> Redshift load results, row counts, and screenshots will be added here once the warehouse load step is finalized.
 
 ---
 
